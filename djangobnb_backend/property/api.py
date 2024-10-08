@@ -23,8 +23,6 @@ def properties_list(request):
     except Exception as e:
         user = None
 
-    
-
     #
     #
 
@@ -53,7 +51,8 @@ def properties_list(request):
     serializer = PropertiesListSerializer(properties, many=True)
 
     return JsonResponse({
-        'data': serializer.data
+        'data': serializer.data,
+        'favorites': favorites
     })
 
 
