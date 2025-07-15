@@ -1,5 +1,4 @@
 from rest_framework import serializers
-
 from .models import Property, Reservation
 from useraccount.serializers import UserDetailSerializer
 
@@ -18,13 +17,13 @@ class PropertiesListSerializer(serializers.ModelSerializer):
 
     def get_image_url(self, obj):
         request = self.context.get('request')
-        if obj.image and hasattr(obj.image, 'url'):
+        if request and obj.image:
             return request.build_absolute_uri(obj.image.url)
         return None
 
 
 class PropertiesDetailSerializer(serializers.ModelSerializer):
-    landlord = UserDetailSerializer(read_only=True, many=False)
+    landlord = UserDetailSerializer(read_only=True)
     image_url = serializers.SerializerMethodField()
 
     class Meta:
@@ -43,13 +42,13 @@ class PropertiesDetailSerializer(serializers.ModelSerializer):
 
     def get_image_url(self, obj):
         request = self.context.get('request')
-        if obj.image and hasattr(obj.image, 'url'):
+        if request and obj.image:
             return request.build_absolute_uri(obj.image.url)
         return None
 
 
 class ReservationsListSerializer(serializers.ModelSerializer):
-    property = PropertiesListSerializer(read_only=True, many=False)
+    property = PropertiesListSerializer(read_only=True)
 
     class Meta:
         model = Reservation
