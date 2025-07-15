@@ -1,30 +1,22 @@
 from rest_framework import serializers
+
 from .models import Property, Reservation
+
+
 from useraccount.serializers import UserDetailSerializer
 
-
 class PropertiesListSerializer(serializers.ModelSerializer):
-    image_url = serializers.SerializerMethodField()
-
     class Meta:
         model = Property
         fields = (
             'id',
             'title',
             'price_per_night',
-            'image_url',
+            'image',
         )
 
-    def get_image_url(self, obj):
-        request = self.context.get('request')
-        if request and obj.image:
-            return request.build_absolute_uri(obj.image.url)
-        return None
-
-
 class PropertiesDetailSerializer(serializers.ModelSerializer):
-    landlord = UserDetailSerializer(read_only=True)
-    image_url = serializers.SerializerMethodField()
+    landlord = UserDetailSerializer(read_only=True, many=False)
 
     class Meta:
         model = Property
@@ -33,30 +25,18 @@ class PropertiesDetailSerializer(serializers.ModelSerializer):
             'title',
             'description',
             'price_per_night',
-            'image_url',
+            'image',
             'bedrooms',
             'bathrooms',
             'guests',
             'landlord'
         )
 
-    def get_image_url(self, obj):
-        request = self.context.get('request')
-        if request and obj.image:
-            return request.build_absolute_uri(obj.image.url)
-        return None
-
-
 class ReservationsListSerializer(serializers.ModelSerializer):
-    property = PropertiesListSerializer(read_only=True)
+    property = PropertiesListSerializer(read_only=True, many=False)
 
     class Meta:
         model = Reservation
         fields = (
-            'id',
-            'start_date',
-            'end_date',
-            'number_of_nights',
-            'total_price',
-            'property',
+            'id', 'start_date', 'end_date', 'number_of_nights', 'total_price', 'property'
         )
