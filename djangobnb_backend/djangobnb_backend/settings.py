@@ -166,6 +166,7 @@ USE_TZ = True
 
 # CORS
 CORS_ALLOWED_ORIGINS = [
+    'https://airbnb-clone-g42s-2z5zxswed-issou24s-projects.vercel.app',
     'https://airbnb-clone-g42s.vercel.app',  # ton frontend déployé
     'http://localhost:3000',                 # pour le dev local
 ]
@@ -173,9 +174,10 @@ CSRF_TRUSTED_ORIGINS = [
     'http://127.0.0.1:8000',
     'http://127.0.0.1:3000',
     'https://airbnb-clone-g42s.vercel.app',
+    'https://airbnb-clone-g42s-2z5zxswed-issou24s-projects.vercel.app',
 ]
 CORS_ALLOW_CREDENTIALS = True
-CORS_ALLOW_HEADERS = "*"
+
 
 
 # Auto primary key
