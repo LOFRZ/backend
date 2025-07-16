@@ -16,9 +16,8 @@ class PropertiesListSerializer(serializers.ModelSerializer):
         )
 
     def get_image_url(self, obj):
-        request = self.context.get('request')
         if obj.image and hasattr(obj.image, 'url'):
-            return request.build_absolute_uri(obj.image.url) if request else obj.image.url
+            return obj.image.url  # Plus besoin de `request`
         return None
 
 
@@ -41,9 +40,8 @@ class PropertiesDetailSerializer(serializers.ModelSerializer):
         )
 
     def get_image_url(self, obj):
-        request = self.context.get('request')
         if obj.image and hasattr(obj.image, 'url'):
-            return request.build_absolute_uri(obj.image.url) if request else obj.image.url
+            return obj.image.url  # Cloudinary fournit une URL publique
         return None
 
 
@@ -57,4 +55,5 @@ class ReservationsListSerializer(serializers.ModelSerializer):
         )
 
     def get_property(self, obj):
+        # Important : context passé ici pour inclure l'image_url
         return PropertiesDetailSerializer(obj.property, context=self.context).data
