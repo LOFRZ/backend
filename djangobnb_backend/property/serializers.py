@@ -1,9 +1,7 @@
 from rest_framework import serializers
-
 from .models import Property, Reservation
-
-
 from useraccount.serializers import UserDetailSerializer
+
 
 class PropertiesListSerializer(serializers.ModelSerializer):
     image_url = serializers.SerializerMethodField()
@@ -20,12 +18,12 @@ class PropertiesListSerializer(serializers.ModelSerializer):
     def get_image_url(self, obj):
         request = self.context.get('request')
         if obj.image and hasattr(obj.image, 'url'):
-            # Si Cloudinary est bien configuré, .url sera complet
             return request.build_absolute_uri(obj.image.url) if request else obj.image.url
         return None
-    
+
+
 class PropertiesDetailSerializer(serializers.ModelSerializer):
-    landlord = UserDetailSerializer(read_only=True, many=False)
+    landlord = UserDetailSerializer(read_only=True)
     image_url = serializers.SerializerMethodField()
 
     class Meta:
@@ -50,7 +48,7 @@ class PropertiesDetailSerializer(serializers.ModelSerializer):
 
 
 class ReservationsListSerializer(serializers.ModelSerializer):
-    property = PropertiesDetailSerializer()
+    property = serializers.SerializerMethodField()
 
     class Meta:
         model = Reservation
@@ -59,5 +57,4 @@ class ReservationsListSerializer(serializers.ModelSerializer):
         )
 
     def get_property(self, obj):
-        # 👇 On transmet ici le contexte avec 'request'
         return PropertiesDetailSerializer(obj.property, context=self.context).data
