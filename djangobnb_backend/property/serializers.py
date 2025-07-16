@@ -50,10 +50,14 @@ class PropertiesDetailSerializer(serializers.ModelSerializer):
 
 
 class ReservationsListSerializer(serializers.ModelSerializer):
-    property = PropertiesDetailSerializer(read_only=True, many=False)
+    property = PropertiesDetailSerializer()
 
     class Meta:
         model = Reservation
         fields = (
             'id', 'start_date', 'end_date', 'number_of_nights', 'total_price', 'property'
         )
+
+    def get_property(self, obj):
+        # 👇 On transmet ici le contexte avec 'request'
+        return PropertiesDetailSerializer(obj.property, context=self.context).data
