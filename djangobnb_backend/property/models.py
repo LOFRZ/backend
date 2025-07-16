@@ -1,8 +1,5 @@
 import uuid
-
-from django.conf import settings
 from django.db import models
-
 from useraccount.models import User
 
 class Property(models.Model):
@@ -21,7 +18,11 @@ class Property(models.Model):
     landlord = models.ForeignKey(User, related_name='properties', on_delete=models.CASCADE)
     created_at = models.DateTimeField(auto_now_add=True)
 
-
+    @property
+    def image_url(self):
+        if self.image and hasattr(self.image, 'url'):
+            return self.image.url
+        return ''
 
 class Reservation(models.Model):
     id = models.UUIDField(primary_key=True, default=uuid.uuid4, editable=False)
@@ -33,5 +34,3 @@ class Reservation(models.Model):
     total_price = models.FloatField()
     created_by = models.ForeignKey(User, related_name='reservations', on_delete=models.CASCADE)
     created_at = models.DateTimeField(auto_now_add=True)
-
-
