@@ -71,8 +71,8 @@ MEDIA_URL = '/media/'
 
 # Middleware
 MIDDLEWARE = [
-    'django.middleware.security.SecurityMiddleware',
     'corsheaders.middleware.CorsMiddleware',
+    'django.middleware.security.SecurityMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
     'django.middleware.common.CommonMiddleware',
     'django.middleware.csrf.CsrfViewMiddleware',
@@ -165,20 +165,11 @@ USE_I18N = True
 USE_TZ = True
 
 # CORS
-CORS_ALLOWED_ORIGINS = [
-    'https://airbnb-clone-g42s-2z5zxswed-issou24s-projects.vercel.app',
-    'https://airbnb-clone-g42s.vercel.app',  # ton frontend déployé
-    'http://localhost:3000',                 # pour le dev local
-]
-CSRF_TRUSTED_ORIGINS = [
-    'http://127.0.0.1:8000',
-    'http://127.0.0.1:3000',
-    'https://airbnb-clone-g42s.vercel.app',
-    'https://airbnb-clone-g42s-2z5zxswed-issou24s-projects.vercel.app',
-]
+CORS_ALLOW_ALL_ORIGINS = True
 CORS_ALLOW_CREDENTIALS = True
 
-
+# 🔓 CSRF : faire confiance à *toutes* les origines (⚠️ non sécurisé)
+CSRF_TRUSTED_ORIGINS = ['*']
 
 # Auto primary key
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
