@@ -111,6 +111,8 @@ INSTALLED_APPS = [
     'cloudinary_storage',
 ]
 
+ROOT_URLCONF = 'djangobnb_backend.urls'
+
 # Templates
 TEMPLATES = [
     {
