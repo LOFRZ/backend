@@ -2,6 +2,7 @@ import os
 import environ
 from pathlib import Path
 from datetime import timedelta
+from corsheaders.defaults import default_headers
 
 import cloudinary
 import cloudinary.uploader
@@ -178,6 +179,10 @@ CSRF_TRUSTED_ORIGINS = [
     'https://airbnb-clone-2-957822787686.europe-west9.run.app',
 ]
 
+CORS_ALLOW_HEADERS = list(default_headers) + [
+    'Content-Type',
+    'Authorization',
+]
 
 
 
