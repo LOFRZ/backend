@@ -50,7 +50,7 @@ class PropertiesDetailSerializer(serializers.ModelSerializer):
 
 
 class ReservationsListSerializer(serializers.ModelSerializer):
-    property = PropertiesListSerializer(read_only=True, many=False)
+    property = PropertiesDetailSerializer(read_only=True, many=False)
 
     class Meta:
         model = Reservation
