@@ -166,10 +166,18 @@ USE_TZ = True
 
 # CORS
 CORS_ALLOW_ALL_ORIGINS = True
-CORS_ALLOW_CREDENTIALS = True
+CORS_ALLOW_CREDENTIALS = True              
 
-# 🔓 CSRF : faire confiance à *toutes* les origines (⚠️ non sécurisé)
-CSRF_TRUSTED_ORIGINS = ['*']
+CSRF_TRUSTED_ORIGINS = [
+    'http://127.0.0.1:8000',
+    'http://127.0.0.1:3000',
+    'https://airbnb-clone-g42s.vercel.app',
+    'https://airbnb-clone-g42s-2z5zxswed-issou24s-projects.vercel.app',
+    'https://airbnb-clone-2-957822787686.europe-west9.run.app',
+]
+
+
+
 
 # Auto primary key
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
